@@ -23,8 +23,8 @@ Before running the project, make sure you have the following installed on your m
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/USERNAME/REPO_NAME.git
-   cd REPO_NAME
+   git clone https://github.com/UyCoder/MuslimReading-ElectronJs.git
+   cd MuslimReading-ElectronJs
    ```
 
 2. **Open the Project in VS Code**:
