@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ug">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ھەدىس</title>
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+  <h1>ھەدىسلەر توپلىمى</h1>
+  <button onclick="window.location.href='index.html'">باشبەتكە قايتىش</button>
+  <div id="hadith-list"></div>
+  
+  <script>
+    const hadithBooks = ['abudawud', 'ahmed', 'bukhari', 'darimi', 'ibnmajah', 'malik', 'muslim', 'nasai', 'tirmidhi'];
+    
+    const hadithList = document.getElementById('hadith-list');
+    
+    hadithBooks.forEach(hadith => {
+      const hadithDiv = document.createElement('div');
+      hadithDiv.classList.add('hadith');
+      hadithDiv.innerHTML = `<a href="hadith-chapters.html?book=${hadith}">${hadith}</a>`;
+      hadithList.appendChild(hadithDiv);
+    });
+  </script>
+</body>
+</html>

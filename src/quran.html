@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ug">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قۇرئان</title>
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+  <h1>قۇرئان</h1>
+  <button onclick="window.location.href='index.html'">باشبەتكە قايتىش</button>
+  <div id="surah-list"></div>
+  
+  <script>
+    // Fetch Quran JSON
+    fetch('../data/quran.json')
+      .then(response => response.json())
+      .then(data => {
+        const surahList = document.getElementById('surah-list');
+        data.forEach(surah => {
+          const surahDiv = document.createElement('div');
+          surahDiv.classList.add('surah');
+          
+          // Surah title with click event to toggle ayats display
+          surahDiv.innerHTML = `
+            <h2 onclick="toggleAyats(${surah.id})">${surah.name} (${surah.transliteration}) - ${surah.translation}</h2>
+            <div id="ayats-${surah.id}" class="ayats" style="display:none;"></div>
+          `;
+          surahList.appendChild(surahDiv);
+        });
+      });
+
+    // Function to toggle display of ayats
+function toggleAyats(surahId) {
+  const ayatDiv = document.getElementById(`ayats-${surahId}`);
+  
+  if (ayatDiv.style.display === 'none') {
+    fetch('../data/quran.json')
+      .then(response => response.json())
+      .then(data => {
+        const surah = data.find(s => s.id == surahId);
+        let ayatsHtml = '';
+        
+        // Generate Ayats HTML with the new font classes
+        surah.verses.forEach(verse => {
+          ayatsHtml += `
+            <div class="ayat-text">
+              <strong>${verse.id}.</strong> ${verse.text}
+            </div>
+            <div class="translation-text">
+              ${verse.translation}
+            </div>
+            <hr> <!-- Line separator -->
+          `;
+        });
+
+        ayatDiv.innerHTML = ayatsHtml;
+        ayatDiv.style.display = 'block';  // Show ayats
+      });
+  } else {
+    ayatDiv.style.display = 'none';  // Hide ayats
+  }
+}
+
+  </script>
+</body>
+</html>

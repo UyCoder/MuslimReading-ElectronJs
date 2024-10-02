@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ug">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سۈرە</title>
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+  <h1>سۈرە</h1>
+  <button onclick="window.location.href='quran.html'">قۇرئانغا قايتىش</button>
+  <div id="ayat-list" style="direction: rtl;"></div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const surahId = urlParams.get('id');
+
+    fetch('../data/quran.json')
+      .then(response => response.json())
+      .then(data => {
+        const surah = data.find(s => s.id == surahId);
+        const ayatList = document.getElementById('ayat-list');
+        let html = `<h2>${surah.name} (${surah.transliteration})</h2>`;
+        surah.verses.forEach(verse => {
+          html += `<div><strong>${verse.id}</strong> ${verse.text}<br> ${verse.translation}</div>`;
+        });
+        ayatList.innerHTML = html;
+      });
+  </script>
+</body>
+</html>

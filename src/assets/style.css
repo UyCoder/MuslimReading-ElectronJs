@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  .selection {
+    margin-top: 50px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .surah, .hadith, .chapter {
+    background-color: #fff;
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    text-align: left;
+  }
+  
+  ul {
+    padding-left: 20px;
+  }
+  
+  #ayat-list div, #chapter-list div {
+    text-align: right;
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+
+  @font-face {
+    font-family: 'ArabType';
+    src: url('/fonts/arabtype.ttf') format('truetype');
+}
+
+.ayat-text {
+    font-family: 'ArabType', sans-serif; /* Arabic text */
+    direction: rtl; /* Right-to-left direction */
+    text-align: right; /* Right align */
+    margin: 5px 0; /* Margin for spacing */
+}
+
+.translation-text {
+    font-family: Arial, sans-serif; /* Change this to your preferred English font */
+    direction: ltr; /* Left-to-right direction */
+    text-align: left; /* Left align */
+    margin: 5px 0; /* Margin for spacing */
+}
+
+  

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ug">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ھەدىس بابلىرى</title>
+  <link rel="stylesheet" href="./assets/style.css">
+  <style>
+    @font-face {
+        font-family: 'ArabType';
+        src: url('/fonts/arabtype.ttf') format('truetype');
+    }
+
+    .arabic-hadith {
+        font-family: 'ArabType', sans-serif; /* Arabic font */
+        direction: rtl; /* Right-to-left direction */
+        text-align: right; /* Right align */
+        margin: 5px 0; /* Margin for spacing */
+    }
+
+    .english-translation {
+        font-family: Arial, sans-serif; /* Change this to your preferred English font */
+        direction: ltr; /* Left-to-right direction */
+        text-align: left; /* Left align */
+        margin: 5px 0; /* Margin for spacing */
+    }
+  </style>
+</head>
+<body>
+  <h1>ھەدىس بابلىرى</h1>
+  <button onclick="window.location.href='hadith.html'">ھەدىس كىتاپلىرىغا قايتىش</button>
+  <div id="chapter-list" style="direction: rtl;"></div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const hadithBook = urlParams.get('book');
+
+    // Fetch the Hadith JSON file for the selected book
+    fetch(`../data/hadith/${hadithBook}.json`)
+      .then(response => response.json())
+      .then(data => {
+        const chapterList = document.getElementById('chapter-list');
+        let chaptersHtml = `<h2>${data.metadata.arabic.title} (${data.metadata.english.title})</h2>`;
+        
+        // Iterate through the chapters
+        data.chapters.forEach(chapter => {
+          chaptersHtml += `
+            <div class="chapter">
+              <h3 onclick="toggleHadiths(${chapter.id})">${chapter.arabic} - ${chapter.english}</h3>
+              <div id="hadiths-${chapter.id}" class="hadiths" style="display:none;"></div>
+            </div>
+          `;
+        });
+
+        chapterList.innerHTML = chaptersHtml;
+      });
+
+    // Function to toggle hadiths for the selected chapter
+    function toggleHadiths(chapterId) {
+      const hadithDiv = document.getElementById(`hadiths-${chapterId}`);
+      
+      // Toggle display if hadiths are already loaded
+      if (hadithDiv.style.display === 'none') {
+        fetch(`../data/hadith/${hadithBook}.json`)
+          .then(response => response.json())
+          .then(data => {
+            const chapterHadiths = data.hadiths.filter(hadith => hadith.chapterId === chapterId);
+            let hadithsHtml = '';
+
+            // Iterate through the hadiths of the clicked chapter
+            chapterHadiths.forEach(hadith => {
+              hadithsHtml += `
+                <div>
+                  <div class="arabic-hadith">
+                    <strong>${hadith.idInBook}.</strong> ${hadith.arabic}
+                  </div>
+                  <div class="english-translation">
+                    ${hadith.english.narrator}: ${hadith.english.text}
+                  </div>
+                </div>
+                <hr>
+              `;
+            });
+
+            hadithDiv.innerHTML = hadithsHtml;
+            hadithDiv.style.display = 'block'; // Show hadiths
+          });
+      } else {
+        hadithDiv.style.display = 'none';  // Hide hadiths
+      }
+    }
+  </script>
+</body>
+</html>
